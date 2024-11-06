@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Cập Nhật Ứng Viên</title>
 </head>
 <body>
+<h1>Cập Nhật Ứng Viên</h1>
+<form th:action="@{/candidates/update/{id}(id=${candidateId})}" th:object="${candidateForm}" method="post">
+    <!-- Thông tin ứng viên -->
+    <label for="email">Email:</label>
+    <input type="email" id="email" th:field="*{email}" required /><br/>
 
+    <label for="fullName">Tên Đầy Đủ:</label>
+    <input type="text" id="fullName" th:field="*{fullName}" required /><br/>
+
+    <label for="phone">Điện Thoại:</label>
+    <input type="text" id="phone" th:field="*{phone}" required /><br/>
+
+    <label for="dob">Ngày Sinh:</label>
+    <input type="date" id="dob" th:field="*{dob}" required /><br/>
+
+    <!-- Thông tin địa chỉ -->
+    <h2>Địa Chỉ</h2>
+    <label for="street">Đường:</label>
+    <input type="text" id="street" th:field="*{street}" required /><br/>
+
+    <label for="city">Thành Phố:</label>
+    <input type="text" id="city" th:field="*{city}" required /><br/>
+
+    <label for="country">Quốc Gia (0-201):</label>
+    <input type="number" id="country" th:field="*{country}" min="0" max="201" required /><br/>
+
+    <label for="number">Số Nhà:</label>
+    <input type="text" id="number" th:field="*{number}" required /><br/>
+
+    <label for="zipcode">Mã Bưu Điện:</label>
+    <input type="text" id="zipcode" th:field="*{zipcode}" required /><br/>
+
+    <button type="submit">Cập Nhật Ứng Viên</button>
+</form>
 </body>
 </html>

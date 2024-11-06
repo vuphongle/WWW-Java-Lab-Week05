@@ -1,10 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Danh Sách Ứng Viên Có Phân Trang</title>
 </head>
 <body>
+<h1>Danh Sách Ứng Viên Có Phân Trang</h1>
+<a th:href="@{/candidates/add}">Thêm Ứng Viên Mới</a>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Tên Đầy Đủ</th>
+        <th>Email</th>
+        <th>Điện Thoại</th>
+        <th>Ngày Sinh</th>
+        <th>Địa Chỉ</th>
+        <th>Hành Động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="candidate : ${candidates.content}">
+        <td th:text="${candidate.id}">1</td>
+        <td th:text="${candidate.fullName}">Tên Đầy Đủ</td>
+        <td th:text="${candidate.email}">email@example.com</td>
+        <td th:text="${candidate.phone}">0123456789</td>
+        <td th:text="${candidate.dob}">1990-01-01</td>
+        <td th:text="${candidate.address.street} + ', ' + ${candidate.address.city} + ', ' + ${candidate.address.country}">Địa Chỉ</td>
+        <td>
+            <a th:href="@{/candidates/edit/{id}(id=${candidate.id})}">Sửa</a>
+            <a th:href="@{/candidates/delete/{id}(id=${candidate.id})}" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
+<!-- Thêm các nút phân trang -->
+<div>
+    <span th:text="'Page ' + (${candidates.number} + 1) + ' of ' + ${candidates.totalPages}">Page 1 of 1</span>
+    <div>
+        <a th:if="${candidates.hasPrevious()}" th:href="@{/candidates(page=${candidates.number - 1})}">Previous</a>
+        <a th:if="${candidates.hasNext()}" th:href="@{/candidates(page=${candidates.number + 1})}">Next</a>
+    </div>
+</div>
 </body>
 </html>

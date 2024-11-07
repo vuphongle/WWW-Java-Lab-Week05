@@ -1,6 +1,8 @@
 package vn.edu.iuh.fit.backend.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vn.edu.iuh.fit.backend.models.entities.Candidate;
 import vn.edu.iuh.fit.backend.repositories.CandidateRepository;
@@ -54,5 +56,10 @@ public class CandidateServiceImpl implements CandidateService {
         Candidate candidate = candidateRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Candidate not found for this id :: " + id));
         candidateRepository.delete(candidate);
+    }
+
+    @Override
+    public Page<Candidate> getAllCandidates(Pageable pageable) {
+        return candidateRepository.findAll(pageable);
     }
 }

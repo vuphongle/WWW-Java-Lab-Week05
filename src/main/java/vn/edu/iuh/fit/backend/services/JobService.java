@@ -1,3 +1,4 @@
+// JobService.java
 package vn.edu.iuh.fit.backend.services;
 
 import vn.edu.iuh.fit.backend.models.entities.Job;
@@ -9,6 +10,8 @@ public interface JobService {
     List<Job> getAllJobs();
     Optional<Job> getJobById(Long id);
     Job createJob(Job job);
-    Job updateJob(Long id, Job jobDetails);
+    Job updateJob(Job job);
     void deleteJob(Long id);
+
+    void addSkillsToJob(Long jobId, List<Long> skillIds, List<Byte> skillLevels);
 }

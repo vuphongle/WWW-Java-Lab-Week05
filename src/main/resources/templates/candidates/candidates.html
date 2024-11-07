@@ -3,36 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <title>Danh Sách Ứng Viên</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons (Tùy chọn) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
-<h1>Danh Sách Ứng Viên</h1>
-<a th:href="@{/candidates/add}">Thêm Ứng Viên Mới</a>
-<table border="1">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Tên Đầy Đủ</th>
-        <th>Email</th>
-        <th>Điện Thoại</th>
-        <th>Ngày Sinh</th>
-        <th>Địa Chỉ</th>
-        <th>Hành Động</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="candidate : ${candidates}">
-        <td th:text="${candidate.id}">1</td>
-        <td th:text="${candidate.fullName}">Tên Đầy Đủ</td>
-        <td th:text="${candidate.email}">email@example.com</td>
-        <td th:text="${candidate.phone}">0123456789</td>
-        <td th:text="${candidate.dob}">1990-01-01</td>
-        <td th:text="${candidate.address.street} + ', ' + ${candidate.address.city} + ', ' + ${candidate.address.country}">Địa Chỉ</td>
-        <td>
-            <a th:href="@{/candidates/edit/{id}(id=${candidate.id})}">Sửa</a>
-            <a th:href="@{/candidates/delete/{id}(id=${candidate.id})}" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Danh Sách Ứng Viên - Không Phân Trang</h1>
+
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="d-flex justify-content-end mb-3">
+        <a th:href="@{/candidates/add}" class="btn btn-success">
+            <i class="bi bi-plus-lg"></i> Thêm Ứng Viên Mới
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead class="table-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Tên Đầy Đủ</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Điện Thoại</th>
+                        <th scope="col">Ngày Sinh</th>
+                        <th scope="col">Địa Chỉ</th>
+                        <th scope="col">Hành Động</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="candidate : ${candidates}">
+                        <td th:text="${candidate.id}">1</td>
+                        <td th:text="${candidate.fullName}">Tên Đầy Đủ</td>
+                        <td th:text="${candidate.email}">email@example.com</td>
+                        <td th:text="${candidate.phone}">0123456789</td>
+                        <td th:text="${candidate.dob}">1990-01-01</td>
+                        <td th:text="${candidate.address.street} + ', ' + ${candidate.address.city} + ', ' + ${candidate.address.country}">Địa Chỉ</td>
+                        <td>
+                            <a th:href="@{/candidates/edit/{id}(id=${candidate.id})}" class="btn btn-warning btn-sm me-2">
+                                <i class="bi bi-pencil-square"></i> Sửa
+                            </a>
+                            <a th:href="@{/candidates/delete/{id}(id=${candidate.id})}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">
+                                <i class="bi bi-trash"></i> Xóa
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -35,8 +35,6 @@ dependencies {
 
 	// Thư viện bổ sung
 	implementation 'com.neovisionaries:nv-i18n:1.29'
-	// Nếu không cần Spring Data REST, bạn có thể loại bỏ dòng dưới
-	// implementation 'org.springframework.data:spring-data-rest-core:4.1.4'
 
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'
@@ -48,7 +46,6 @@ dependencies {
 	// Thử nghiệm
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-	// testRuntimeOnly 'org.junit.platform:junit-platform-launcher' // Có thể loại bỏ nếu không cần
 }
 
 

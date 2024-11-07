@@ -15,4 +15,6 @@ public interface CandidateService {
     void deleteCandidate(Long id);
 
     Page<Candidate> getAllCandidates(Pageable pageable);
+
+    Optional<Candidate> findByEmail(String email);
 }

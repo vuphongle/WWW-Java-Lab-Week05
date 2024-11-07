@@ -62,4 +62,9 @@ public class CandidateServiceImpl implements CandidateService {
     public Page<Candidate> getAllCandidates(Pageable pageable) {
         return candidateRepository.findAll(pageable);
     }
+
+    @Override
+    public Optional<Candidate> findByEmail(String email) {
+        return candidateRepository.findByEmail(email);
+    }
 }

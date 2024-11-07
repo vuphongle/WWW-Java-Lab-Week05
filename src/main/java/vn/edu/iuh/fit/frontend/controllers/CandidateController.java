@@ -1,5 +1,6 @@
 package vn.edu.iuh.fit.frontend.controllers;
 
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -160,5 +161,48 @@ public class CandidateController {
             redirectAttributes.addFlashAttribute("errorMessage", "Xóa ứng viên thất bại!");
         }
         return "redirect:/candidates/list";
+    }
+
+    // Hiển thị form đăng nhập
+    @GetMapping("/login")
+    public String showLoginForm(Model model) {
+        model.addAttribute("email", "");
+        return "candidates/login";
+    }
+
+    // Xử lý đăng nhập
+    @PostMapping("/login")
+    public String handleLogin(@RequestParam("email") String email, Model model, RedirectAttributes redirectAttributes) {
+        try {
+            Candidate candidate = candidateService.findByEmail(email)
+                    .orElseThrow(() -> new ResourceNotFoundException("Email không tồn tại: " + email));
+            model.addAttribute("candidate", candidate);
+            return "candidates/profile"; // Trang hiển thị thông tin ứng viên
+        } catch (ResourceNotFoundException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/candidates/login";
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "Đăng nhập thất bại!");
+            return "redirect:/candidates/login";
+        }
+    }
+
+    @GetMapping("/profile")
+    public String showProfile(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+        Candidate candidate = (Candidate) session.getAttribute("loggedInCandidate");
+        if (candidate == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Bạn cần đăng nhập trước!");
+            return "redirect:/candidates/login";
+        }
+        model.addAttribute("candidate", candidate);
+        return "candidates/profile";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
+        session.removeAttribute("loggedInCandidate");
+        redirectAttributes.addFlashAttribute("successMessage", "Đăng xuất thành công!");
+        return "redirect:/candidates/login";
     }
 }

@@ -27,6 +27,7 @@
             <h5 class="mb-0">Hồ Sơ Ứng Viên</h5>
         </div>
         <div class="card-body">
+            <!-- Tên Đầy Đủ -->
             <div class="row mb-3">
                 <div class="col-md-3 font-weight-bold">Tên Đầy Đủ:</div>
                 <div class="col-md-9" th:text="${candidate.fullName}">Tên Đầy Đủ</div>
@@ -45,10 +46,25 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-3 font-weight-bold">Địa Chỉ:</div>
-                <div class="col-md-9" th:text="${candidate.address.street} + ', ' + ${candidate.address.city} + ', ' + ${candidate.address.country} + ', ' + ${candidate.address.zipcode}">
+                <div class="col-md-9" th:text="|${candidate.address.street}, ${candidate.address.city}, ${candidate.address.country}, ${candidate.address.zipcode}|">
                     Địa Chỉ
                 </div>
             </div>
+
+            <!-- Kỹ Năng -->
+            <div class="row mb-3">
+                <div class="col-md-3 font-weight-bold">Kỹ Năng:</div>
+                <div class="col-md-9">
+                    <ul class="list-group" th:if="${candidateSkills != null and !#lists.isEmpty(candidateSkills)}">
+                        <li class="list-group-item" th:each="candidateSkill : ${candidateSkills}" th:text="${candidateSkill.skill.skillName}">Tên Kỹ Năng</li>
+                    </ul>
+                    <div th:if="${candidateSkills == null or #lists.isEmpty(candidateSkills)}" class="text-muted">
+                        Ứng viên này chưa có kỹ năng nào.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nút Chức Năng -->
             <div class="d-flex justify-content-end">
                 <a th:href="@{/candidates/edit/{id}(id=${candidate.id})}" class="btn btn-warning me-2">
                     <i class="bi bi-pencil-square"></i> Sửa Hồ Sơ

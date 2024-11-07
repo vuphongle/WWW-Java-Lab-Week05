@@ -5,7 +5,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import vn.edu.iuh.fit.backend.models.entities.Candidate;
+import vn.edu.iuh.fit.backend.models.entities.CandidateSkill;
 import vn.edu.iuh.fit.backend.repositories.CandidateRepository;
+import vn.edu.iuh.fit.backend.repositories.CandidateSkillRepository;
 import vn.edu.iuh.fit.backend.services.CandidateService;
 import vn.edu.iuh.fit.backend.exceptions.ResourceNotFoundException;
 
@@ -16,10 +18,12 @@ import java.util.Optional;
 public class CandidateServiceImpl implements CandidateService {
 
     private final CandidateRepository candidateRepository;
+    private final CandidateSkillRepository candidateSkillRepository;
 
     @Autowired
-    public CandidateServiceImpl(CandidateRepository candidateRepository) {
+    public CandidateServiceImpl(CandidateRepository candidateRepository, CandidateSkillRepository candidateSkillRepository) {
         this.candidateRepository = candidateRepository;
+        this.candidateSkillRepository = candidateSkillRepository;
     }
 
     @Override
@@ -66,5 +70,10 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     public Optional<Candidate> findByEmail(String email) {
         return candidateRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<CandidateSkill> getSkillsByCandidateId(Long canId) {
+        return candidateSkillRepository.findByCandidateIdWithSkill(canId);
     }
 }

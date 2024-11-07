@@ -1,6 +1,8 @@
 package vn.edu.iuh.fit.frontend.controllers;
 
 import jakarta.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.edu.iuh.fit.backend.models.entities.Candidate;
 import vn.edu.iuh.fit.backend.models.entities.Address;
 import vn.edu.iuh.fit.backend.models.dto.CandidateForm;
+import vn.edu.iuh.fit.backend.models.entities.CandidateSkill;
 import vn.edu.iuh.fit.backend.services.CandidateService;
 import vn.edu.iuh.fit.backend.services.AddressService;
 import vn.edu.iuh.fit.backend.exceptions.ResourceNotFoundException;
@@ -21,6 +24,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/candidates")
 public class CandidateController {
+
+    private static final Logger logger = LoggerFactory.getLogger(CandidateController.class);
 
     @Autowired
     private CandidateService candidateService;
@@ -176,13 +181,36 @@ public class CandidateController {
         try {
             Candidate candidate = candidateService.findByEmail(email)
                     .orElseThrow(() -> new ResourceNotFoundException("Email không tồn tại: " + email));
+
+            List<CandidateSkill> candidateSkills = candidateService.getSkillsByCandidateId(candidate.getId());
+
+            // Ghi log thông tin candidate
+            logger.info("Candidate: {}", candidate);
+
+            // Ghi log thông tin skills
+            if (candidateSkills != null && !candidateSkills.isEmpty()) {
+                logger.info("Skills Count: {}", candidateSkills.size());
+                for (CandidateSkill cs : candidateSkills) {
+                    if (cs.getSkill() != null) {
+                        logger.info("CandidateSkill ID: {}, Skill Name: {}", cs.getId(), cs.getSkill().getSkillName());
+                    } else {
+                        logger.warn("CandidateSkill ID: {} has null Skill", cs.getId());
+                    }
+                }
+            } else {
+                logger.warn("Skills list is null or empty for candidate ID: {}", candidate.getId());
+            }
+
             model.addAttribute("candidate", candidate);
+            model.addAttribute("candidateSkills", candidateSkills);
+
             return "candidates/profile"; // Trang hiển thị thông tin ứng viên
         } catch (ResourceNotFoundException e) {
+            logger.error("ResourceNotFoundException: {}", e.getMessage());
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             return "redirect:/candidates/login";
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Exception during login", e);
             redirectAttributes.addFlashAttribute("errorMessage", "Đăng nhập thất bại!");
             return "redirect:/candidates/login";
         }

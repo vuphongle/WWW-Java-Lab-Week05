@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -22,5 +25,11 @@ public class Skill {
 
     @Column(name = "type")
     private Byte type;
+
+    @OneToMany(mappedBy = "skill")
+    private Set<CandidateSkill> candidateSkills = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "skill")
+    private Set<JobSkill> jobSkills = new LinkedHashSet<>();
 
 }

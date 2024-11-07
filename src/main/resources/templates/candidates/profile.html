@@ -32,18 +32,22 @@
                 <div class="col-md-3 font-weight-bold">Tên Đầy Đủ:</div>
                 <div class="col-md-9" th:text="${candidate.fullName}">Tên Đầy Đủ</div>
             </div>
+            <!-- Email -->
             <div class="row mb-3">
                 <div class="col-md-3 font-weight-bold">Email:</div>
                 <div class="col-md-9" th:text="${candidate.email}">email@example.com</div>
             </div>
+            <!-- Số Điện Thoại -->
             <div class="row mb-3">
                 <div class="col-md-3 font-weight-bold">Số Điện Thoại:</div>
                 <div class="col-md-9" th:text="${candidate.phone}">0123456789</div>
             </div>
+            <!-- Ngày Sinh -->
             <div class="row mb-3">
                 <div class="col-md-3 font-weight-bold">Ngày Sinh:</div>
                 <div class="col-md-9" th:text="${candidate.dob}">1990-01-01</div>
             </div>
+            <!-- Địa Chỉ -->
             <div class="row mb-3">
                 <div class="col-md-3 font-weight-bold">Địa Chỉ:</div>
                 <div class="col-md-9" th:text="|${candidate.address.street}, ${candidate.address.city}, ${candidate.address.country}, ${candidate.address.zipcode}|">
@@ -51,12 +55,26 @@
                 </div>
             </div>
 
+            <!-- Nút Thêm Kỹ Năng -->
+            <div class="d-flex justify-content-end mb-3">
+                <a th:href="@{'/candidates/' + ${candidate.id} + '/skills/add'}" class="btn btn-success">
+                    <i class="bi bi-plus-circle"></i> Thêm Kỹ Năng
+                </a>
+            </div>
+
             <!-- Kỹ Năng -->
             <div class="row mb-3">
                 <div class="col-md-3 font-weight-bold">Kỹ Năng:</div>
                 <div class="col-md-9">
                     <ul class="list-group" th:if="${candidateSkills != null and !#lists.isEmpty(candidateSkills)}">
-                        <li class="list-group-item" th:each="candidateSkill : ${candidateSkills}" th:text="${candidateSkill.skill.skillName}">Tên Kỹ Năng</li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center" th:each="candidateSkill : ${candidateSkills}">
+                            <span th:text="${candidateSkill.skill.skillName}">Tên Kỹ Năng</span>
+                            <form th:action="@{'/candidates/' + ${candidate.id} + '/skills/' + ${candidateSkill.skill.id} + '/delete'}" method="post" onsubmit="return confirm('Bạn có chắc chắn muốn xóa kỹ năng này?');">
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="bi bi-trash"></i> Xóa
+                                </button>
+                            </form>
+                        </li>
                     </ul>
                     <div th:if="${candidateSkills == null or #lists.isEmpty(candidateSkills)}" class="text-muted">
                         Ứng viên này chưa có kỹ năng nào.
@@ -64,9 +82,9 @@
                 </div>
             </div>
 
-            <!-- Nút Chức Năng -->
+            <!-- Nút Chức Năng Khác (Sửa Hồ Sơ, Đăng Xuất) -->
             <div class="d-flex justify-content-end">
-                <a th:href="@{/candidates/edit/{id}(id=${candidate.id})}" class="btn btn-warning me-2">
+                <a th:href="@{'/candidates/edit/' + ${candidate.id}}" class="btn btn-warning me-2">
                     <i class="bi bi-pencil-square"></i> Sửa Hồ Sơ
                 </a>
                 <a th:href="@{/candidates/logout}" class="btn btn-danger">

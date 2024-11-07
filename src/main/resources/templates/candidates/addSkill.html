@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Kỹ Năng</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons (Tùy chọn) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Thêm Kỹ Năng Cho Ứng Viên</h2>
+
+    <!-- Thông báo lỗi hoặc thành công -->
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${errorMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <form th:action="@{'/candidates/' + ${candidate.id} + '/skills/add'}" th:object="${candidateSkillForm}" method="post">
+        <div class="mb-3">
+            <label for="skillId" class="form-label">Kỹ Năng:</label>
+            <select th:field="*{skillId}" class="form-select" id="skillId" required>
+                <option value="" disabled selected>Chọn Kỹ Năng</option>
+                <option th:each="skill : ${availableSkills}" th:value="${skill.id}" th:text="${skill.skillName}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="skillLevel" class="form-label">Mức Độ Kỹ Năng:</label>
+            <select th:field="*{skillLevel}" class="form-select" id="skillLevel" required>
+                <option value="" disabled selected>Chọn Mức Độ</option>
+                <option value="0">Beginner</option>
+                <option value="1">Intermediate</option>
+                <option value="2">Advanced</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="moreInfos" class="form-label">Thông Tin Bổ Sung:</label>
+            <textarea th:field="*{moreInfos}" class="form-control" id="moreInfos" rows="3" placeholder="Nhập thông tin bổ sung (nếu có)"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Thêm Kỹ Năng</button>
+        <a th:href="@{'/candidates/' + ${candidate.id} + '/profile'}" class="btn btn-secondary">Quay Lại</a>
+    </form>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

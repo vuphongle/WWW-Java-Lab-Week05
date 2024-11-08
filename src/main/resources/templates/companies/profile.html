@@ -62,6 +62,17 @@
                 <div class="col-md-9" th:text="${company.about}">Giới Thiệu Về Công Ty</div>
             </div>
 
+            <div class="container mt-5">
+                <h2 class="mb-4 text-center">Danh sách công việc đang tuyển dụng</h2>
+
+                <div class="card mb-3" th:each="job : ${jobs}">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${job.jobName}">Tên Công Việc</h5>
+                        <p class="card-text" th:text="${job.jobDesc}">Mô tả công việc</p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Nút Chức Năng Khác (Sửa Hồ Sơ, Đăng Xuất) -->
             <div class="d-flex justify-content-end">
                 <a th:href="@{/companies/edit}" class="btn btn-warning me-2">

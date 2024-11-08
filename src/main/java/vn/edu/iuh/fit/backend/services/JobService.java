@@ -14,4 +14,6 @@ public interface JobService {
     void deleteJob(Long id);
 
     void addSkillsToJob(Long jobId, List<Long> skillIds, List<Byte> skillLevels);
+
+    List<Job> findByCompany_Id(Long companyId);
 }

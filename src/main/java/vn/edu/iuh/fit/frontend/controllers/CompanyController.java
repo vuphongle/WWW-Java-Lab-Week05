@@ -13,9 +13,13 @@ import vn.edu.iuh.fit.backend.exceptions.ResourceNotFoundException;
 import vn.edu.iuh.fit.backend.models.dto.CompanyForm;
 import vn.edu.iuh.fit.backend.models.entities.Address;
 import vn.edu.iuh.fit.backend.models.entities.Company;
+import vn.edu.iuh.fit.backend.models.entities.Job;
 import vn.edu.iuh.fit.backend.services.AddressService;
 import vn.edu.iuh.fit.backend.services.CompanyService;
 import vn.edu.iuh.fit.backend.enums.CountryCode;
+import vn.edu.iuh.fit.backend.services.JobService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/companies")
@@ -25,6 +29,8 @@ public class CompanyController {
     private final CompanyService companyService;
     @Autowired
     private AddressService addressService;
+    @Autowired
+    private JobService jobService;
     private final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
     public CompanyController(CompanyService companyService) {
@@ -52,8 +58,12 @@ public class CompanyController {
             // Ghi log thông tin công ty
             logger.info("Company logged in: {}", company);
             company.setAddress(address);
+
+            List<Job> jobs = jobService.findByCompany_Id(company.getId());
+
             // Lưu thông tin công ty vào session
             session.setAttribute("loggedInCompany", company);
+            session.setAttribute("companyJobs", jobs);
 
             // Chuyển hướng đến trang hồ sơ công ty
             return "redirect:/companies/profile";
@@ -74,14 +84,19 @@ public class CompanyController {
     @GetMapping("/profile")
     public String showProfile(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         Company company = (Company) session.getAttribute("loggedInCompany");
+        List<Job> jobs = (List<Job>) session.getAttribute("companyJobs");
+
         if (company == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "Bạn cần đăng nhập trước!");
             return "redirect:/companies/login";
         }
 
         model.addAttribute("company", company);
+        model.addAttribute("jobs", jobs);
+
         return "companies/profile";
     }
+
 
     /**
      * Xử lý đăng xuất công ty

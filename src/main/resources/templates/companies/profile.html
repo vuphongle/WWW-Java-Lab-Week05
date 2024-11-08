@@ -7,9 +7,24 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons (Tùy chọn) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        /* Tùy chọn: Canh giữa nội dung theo chiều dọc và tạo nền gradient */
+        body {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Giới hạn chiều rộng tối đa của container để nội dung không bị dãn quá mức trên màn hình rộng */
+        .content-container {
+            max-width: 900px;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-<div class="container mt-5">
+<div class="container content-container mt-5">
     <h1 class="mb-4 text-center">Thông Tin Công Ty</h1>
 
     <!-- Thông báo thành công hoặc lỗi -->
@@ -22,7 +37,14 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <div class="card">
+    <!-- Thêm Nút Quay về Trang Chủ ở đầu trang -->
+    <div class="d-flex justify-content-end mb-3">
+        <a href="http://localhost:8080" class="btn btn-secondary">
+            <i class="bi bi-house-door-fill me-2"></i> Quay về Trang Chủ
+        </a>
+    </div>
+
+    <div class="card mb-4">
         <div class="card-header bg-primary text-white">
             <h5 class="mb-0">Hồ Sơ Công Ty</h5>
         </div>
@@ -62,7 +84,8 @@
                 <div class="col-md-9" th:text="${company.about}">Giới Thiệu Về Công Ty</div>
             </div>
 
-            <div class="container mt-5">
+            <!-- Danh sách công việc -->
+            <div class="mt-5">
                 <h2 class="mb-4 text-center">Danh sách công việc</h2>
 
                 <div th:if="${#lists.isEmpty(jobs)}">
@@ -76,27 +99,32 @@
                         <a th:href="@{/jobs/{id}/candidates(id=${job.id})}" class="btn btn-primary">
                             <i class="bi bi-search"></i> Tìm Ứng Viên Phù Hợp
                         </a>
-
                     </div>
                 </div>
             </div>
 
-
-            <!-- Nút Chức Năng Khác (Sửa Hồ Sơ, Đăng Xuất) -->
-            <div class="d-flex justify-content-end">
-                <a th:href="@{/companies/edit}" class="btn btn-warning me-2">
+            <!-- Nút Chức Năng Khác (Sửa Hồ Sơ, Đăng Tin Tuyển Dụng, Đăng Xuất) -->
+            <div class="d-flex justify-content-end mt-4">
+                <a th:href="@{/companies/edit}" class="btn btn-warning me-2 mb-2">
                     <i class="bi bi-pencil-square"></i> Sửa Hồ Sơ
                 </a>
 
-                <a th:href="@{/jobs/new}" class="btn btn-success me-2">
+                <a th:href="@{/jobs/new}" class="btn btn-success me-2 mb-2">
                     <i class="bi bi-file-earmark-plus"></i> Đăng Tin Tuyển Dụng
                 </a>
 
-                <a th:href="@{/companies/logout}" class="btn btn-danger">
+                <a th:href="@{/companies/logout}" class="btn btn-danger mb-2">
                     <i class="bi bi-box-arrow-right"></i> Đăng Xuất
                 </a>
             </div>
         </div>
+    </div>
+
+    <!-- Thêm Nút Quay về Trang Chủ ở cuối trang (Tùy chọn) -->
+    <div class="d-flex justify-content-center">
+        <a href="http://localhost:8080/index.html" class="btn btn-secondary">
+            <i class="bi bi-house-door-fill me-2"></i> Quay về Trang Chủ
+        </a>
     </div>
 </div>
 

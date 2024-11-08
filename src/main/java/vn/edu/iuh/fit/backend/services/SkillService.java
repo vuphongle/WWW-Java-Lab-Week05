@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface SkillService {
     List<Skill> getAllSkills();
-    Optional<Skill> getSkillById(Long id);
+    Optional<Skill> findById(Long id);
     Skill createSkill(Skill skill);
     Skill updateSkill(Skill skill);
     void deleteSkill(Long id);

@@ -81,4 +81,9 @@ public class JobServiceImpl implements JobService {
     public List<Job> findByCompany_Id(Long companyId) {
         return jobRepository.findByCompany_Id(companyId);
     }
+
+    @Override
+    public void addJobSkill(JobSkill jobSkill) {
+        jobSkillRepository.save(jobSkill);
+    }
 }

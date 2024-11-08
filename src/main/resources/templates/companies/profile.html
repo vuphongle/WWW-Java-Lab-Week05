@@ -63,21 +63,34 @@
             </div>
 
             <div class="container mt-5">
-                <h2 class="mb-4 text-center">Danh sách công việc đang tuyển dụng</h2>
+                <h2 class="mb-4 text-center">Danh sách công việc</h2>
 
-                <div class="card mb-3" th:each="job : ${jobs}">
+                <div th:if="${#lists.isEmpty(jobs)}">
+                    <p class="text-center">Hiện tại, công ty chưa có công việc nào.</p>
+                </div>
+
+                <div class="card mb-3" th:each="job : ${jobs}" th:unless="${#lists.isEmpty(jobs)}">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${job.jobName}">Tên Công Việc</h5>
                         <p class="card-text" th:text="${job.jobDesc}">Mô tả công việc</p>
+                        <a th:href="" class="btn btn-primary">
+                            <i class="bi bi-search"></i> Tìm Ứng Viên Phù Hợp
+                        </a>
                     </div>
                 </div>
             </div>
+
 
             <!-- Nút Chức Năng Khác (Sửa Hồ Sơ, Đăng Xuất) -->
             <div class="d-flex justify-content-end">
                 <a th:href="@{/companies/edit}" class="btn btn-warning me-2">
                     <i class="bi bi-pencil-square"></i> Sửa Hồ Sơ
                 </a>
+
+                <a th:href="@{/jobs/new}" class="btn btn-success me-2">
+                    <i class="bi bi-file-earmark-plus"></i> Đăng Tin Tuyển Dụng
+                </a>
+
                 <a th:href="@{/companies/logout}" class="btn btn-danger">
                     <i class="bi bi-box-arrow-right"></i> Đăng Xuất
                 </a>

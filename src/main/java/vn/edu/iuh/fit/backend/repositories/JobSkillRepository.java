@@ -5,6 +5,9 @@ import org.springframework.stereotype.Repository;
 import vn.edu.iuh.fit.backend.models.entities.JobSkill;
 import vn.edu.iuh.fit.backend.models.entities.JobSkillId;
 
+import java.util.List;
+
 @Repository
 public interface JobSkillRepository extends JpaRepository<JobSkill, JobSkillId> {
+    List<JobSkill>  getJobSkillsByJobId(Long jobId);
 }

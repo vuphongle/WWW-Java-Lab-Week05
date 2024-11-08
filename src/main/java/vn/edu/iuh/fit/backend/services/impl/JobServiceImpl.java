@@ -86,4 +86,9 @@ public class JobServiceImpl implements JobService {
     public void addJobSkill(JobSkill jobSkill) {
         jobSkillRepository.save(jobSkill);
     }
+
+    @Override
+    public List<JobSkill> getJobSkillsByJobId(Long jobId) {
+        return jobSkillRepository.getJobSkillsByJobId(jobId);
+    }
 }

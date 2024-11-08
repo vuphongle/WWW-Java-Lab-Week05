@@ -76,4 +76,9 @@ public class CandidateServiceImpl implements CandidateService {
     public List<CandidateSkill> getSkillsByCandidateId(Long canId) {
         return candidateSkillRepository.findByCandidateIdWithSkill(canId);
     }
+
+    @Override
+    public List<Candidate> getSuitableCandidatesForJob(Long jobId) {
+        return candidateRepository.findSuitableCandidatesForJob(jobId);
+    }
 }

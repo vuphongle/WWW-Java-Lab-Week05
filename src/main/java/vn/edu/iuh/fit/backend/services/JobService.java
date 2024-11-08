@@ -19,4 +19,6 @@ public interface JobService {
     List<Job> findByCompany_Id(Long companyId);
 
     void addJobSkill(JobSkill jobSkill);
+
+    List<JobSkill> getJobSkillsByJobId(Long jobId);
 }

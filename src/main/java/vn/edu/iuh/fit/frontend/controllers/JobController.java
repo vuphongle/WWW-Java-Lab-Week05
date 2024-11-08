@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.edu.iuh.fit.backend.models.dto.JobForm;
 import vn.edu.iuh.fit.backend.models.dto.JobSkillForm;
-import vn.edu.iuh.fit.backend.models.entities.Company;
-import vn.edu.iuh.fit.backend.models.entities.Job;
-import vn.edu.iuh.fit.backend.models.entities.JobSkill;
-import vn.edu.iuh.fit.backend.models.entities.Skill;
+import vn.edu.iuh.fit.backend.models.entities.*;
+import vn.edu.iuh.fit.backend.services.CandidateService;
 import vn.edu.iuh.fit.backend.services.JobService;
 import vn.edu.iuh.fit.backend.services.JobSkillService;
 import vn.edu.iuh.fit.backend.services.SkillService;
@@ -34,6 +32,9 @@ public class JobController {
 
     @Autowired
     private JobSkillService jobSkillService;
+
+    @Autowired
+    private CandidateService candidateService;
 
     /**
      * Hiển thị form đăng tin tuyển dụng
@@ -103,5 +104,39 @@ public class JobController {
 
         redirectAttributes.addFlashAttribute("successMessage", "Đăng tin tuyển dụng thành công!");
         return "redirect:/jobs/new";
+    }
+
+    @GetMapping("/{id}/candidates")
+    public String showCandidatesForJob(@PathVariable("id") Long jobId,
+                                       HttpSession session,
+                                       Model model,
+                                       RedirectAttributes redirectAttributes) {
+        // Kiểm tra xem công ty đã đăng nhập hay chưa
+        Company loggedInCompany = (Company) session.getAttribute("loggedInCompany");
+        if (loggedInCompany == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Bạn cần đăng nhập trước!");
+            return "redirect:/companies/login";
+        }
+
+        // Lấy thông tin công việc
+        Job job = jobService.getJobById(jobId).orElse(null);
+        if (job == null) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Công việc không tồn tại!");
+            return "redirect:/companies/profile";
+        }
+
+        // Kiểm tra xem công việc có thuộc về công ty đang đăng nhập hay không
+        if (!job.getCompany().getId().equals(loggedInCompany.getId())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Bạn không có quyền xem ứng viên cho công việc này!");
+            return "redirect:/companies/profile";
+        }
+
+        // Tìm kiếm ứng viên phù hợp
+        List<Candidate> candidates = candidateService.getSuitableCandidatesForJob(jobId);
+
+        model.addAttribute("job", job);
+        model.addAttribute("candidates", candidates);
+
+        return "jobs/candidates"; // Tên của view (Thymeleaf, JSP, etc.)
     }
 }

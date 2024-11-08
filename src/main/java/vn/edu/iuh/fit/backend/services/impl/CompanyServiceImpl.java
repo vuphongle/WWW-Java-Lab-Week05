@@ -53,4 +53,14 @@ public class CompanyServiceImpl implements CompanyService {
                 .orElseThrow(() -> new ResourceNotFoundException("Company not found for this id :: " + id));
         companyRepository.delete(company);
     }
+
+    @Override
+    public Optional<Company> findByEmail(String email) {
+        return companyRepository.findByEmail(email);
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        return companyRepository.existsByEmail(email);
+    }
 }

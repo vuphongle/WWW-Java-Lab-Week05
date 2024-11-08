@@ -13,4 +13,8 @@ public interface CompanyService {
     Company createCompany(Company company);
     Company updateCompany(Long id, Company companyDetails);
     void deleteCompany(Long id);
+
+    Optional<Company> findByEmail(String email);
+
+    boolean existsByEmail(String email);
 }

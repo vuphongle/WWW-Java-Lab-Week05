@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thông Tin Công Ty</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons (Tùy chọn) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Thông Tin Công Ty</h1>
+
+    <!-- Thông báo thành công hoặc lỗi -->
+    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${successMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${errorMessage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Hồ Sơ Công Ty</h5>
+        </div>
+        <div class="card-body">
+            <!-- Tên Công Ty -->
+            <div class="row mb-3">
+                <div class="col-md-3 font-weight-bold">Tên Công Ty:</div>
+                <div class="col-md-9" th:text="${company.compName}">Tên Công Ty</div>
+            </div>
+            <!-- Email -->
+            <div class="row mb-3">
+                <div class="col-md-3 font-weight-bold">Email:</div>
+                <div class="col-md-9" th:text="${company.email}">email@company.com</div>
+            </div>
+            <!-- Số Điện Thoại -->
+            <div class="row mb-3">
+                <div class="col-md-3 font-weight-bold">Số Điện Thoại:</div>
+                <div class="col-md-9" th:text="${company.phone}">0123456789</div>
+            </div>
+            <!-- Website -->
+            <div class="row mb-3">
+                <div class="col-md-3 font-weight-bold">Website:</div>
+                <div class="col-md-9">
+                    <a th:href="${company.webUrl}" th:text="${company.webUrl}" target="_blank">website.com</a>
+                </div>
+            </div>
+            <!-- Địa Chỉ -->
+            <div class="row mb-3">
+                <div class="col-md-3 font-weight-bold">Địa Chỉ:</div>
+                <div class="col-md-9" th:text="|${company.address.street}, ${company.address.number}, ${company.address.city}, ${company.address.country.displayName}, ${company.address.zipcode}|">
+                    Địa Chỉ
+                </div>
+            </div>
+            <!-- Giới Thiệu Về Công Ty -->
+            <div class="row mb-3">
+                <div class="col-md-3 font-weight-bold">Giới Thiệu:</div>
+                <div class="col-md-9" th:text="${company.about}">Giới Thiệu Về Công Ty</div>
+            </div>
+
+            <!-- Nút Chức Năng Khác (Sửa Hồ Sơ, Đăng Xuất) -->
+            <div class="d-flex justify-content-end">
+                <a th:href="@{/companies/edit}" class="btn btn-warning me-2">
+                    <i class="bi bi-pencil-square"></i> Sửa Hồ Sơ
+                </a>
+                <a th:href="@{/companies/logout}" class="btn btn-danger">
+                    <i class="bi bi-box-arrow-right"></i> Đăng Xuất
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

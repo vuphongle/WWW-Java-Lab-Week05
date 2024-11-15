@@ -60,19 +60,19 @@
                                 <span th:text="${jobSkill.skill.skillDescription}">Skill Description</span>
                                 <!-- Mapping type từ số sang chữ bằng th:if -->
                                 <span class="badge ms-2"
-                                      th:if="${jobSkill.skill.type == 0}"
-                                      th:text="'CƠ BẢN'"
+                                      th:if="${jobSkill.skillLevel == 0}"
+                                      th:text="'BASIC'"
                                       th:classappend="' bg-primary'">CƠ BẢN</span>
                                 <span class="badge ms-2"
-                                      th:if="${jobSkill.skill.type == 1}"
-                                      th:text="'TRUNG BÌNH'"
+                                      th:if="${jobSkill.skillLevel == 1}"
+                                      th:text="'INTERMEDIATE'"
                                       th:classappend="' bg-warning text-dark'">TRUNG BÌNH</span>
                                 <span class="badge ms-2"
-                                      th:if="${jobSkill.skill.type == 2}"
-                                      th:text="'NÂNG CAO'"
+                                      th:if="${jobSkill.skillLevel == 2}"
+                                      th:text="'ADVANCED'"
                                       th:classappend="' bg-success'">NÂNG CAO</span>
                                 <span class="badge ms-2"
-                                      th:if="${jobSkill.skill.type != 0 and jobSkill.skill.type != 1 and jobSkill.skill.type != 2}"
+                                      th:if="${jobSkill.skillLevel != 0 and jobSkill.skill.type != 1 and jobSkill.skill.type != 2}"
                                       th:text="'KHÔNG XÁC ĐỊNH'"
                                       th:classappend="' bg-secondary'">KHÔNG XÁC ĐỊNH</span>
                             </li>

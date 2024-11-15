@@ -19,6 +19,7 @@ import vn.edu.iuh.fit.backend.repositories.SkillRepository;
 import vn.edu.iuh.fit.backend.services.CandidateService;
 import vn.edu.iuh.fit.backend.services.AddressService;
 import vn.edu.iuh.fit.backend.exceptions.ResourceNotFoundException;
+import vn.edu.iuh.fit.backend.services.JobService;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,13 +33,14 @@ public class CandidateController {
 
     @Autowired
     private CandidateService candidateService;
-
     @Autowired
     private AddressService addressService;
     @Autowired
     private SkillRepository skillRepository;
     @Autowired
     private CandidateSkillRepository candidateSkillRepository;
+    @Autowired
+    private JobService jobService;
 
 
     // Hiển thị danh sách các ứng viên không phân trang
@@ -389,5 +391,26 @@ public class CandidateController {
             redirectAttributes.addFlashAttribute("errorMessage", "Hiển thị hồ sơ thất bại!");
             return "redirect:/candidates/login";
         }
+    }
+
+    @GetMapping("/{id}/job-suggestions")
+    public String getJobSuggestions(@PathVariable Long id, Model model) {
+        Optional<Candidate> optionalCandidate = candidateService.getCandidateById(id);
+
+
+        if (!optionalCandidate.isPresent()) {
+            model.addAttribute("errorMessage", "Ứng viên không tồn tại.");
+            return "redirect:/candidates";
+        }
+
+        List<CandidateSkill> candidateSkills = candidateService.getSkillsByCandidateId(id);
+
+
+        Candidate candidate = optionalCandidate.get();
+        List<Job> suggestedJobs = jobService.findJobsByCandidateSkills(candidate.getId());
+        model.addAttribute("candidate", candidate);
+        model.addAttribute("suggestedJobs", suggestedJobs);
+        model.addAttribute("candidateSkills", candidateSkills);
+        return "candidates/job-suggestions";
     }
 }

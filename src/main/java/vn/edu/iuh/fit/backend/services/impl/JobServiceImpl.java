@@ -3,6 +3,7 @@ package vn.edu.iuh.fit.backend.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vn.edu.iuh.fit.backend.models.entities.Candidate;
 import vn.edu.iuh.fit.backend.models.entities.Job;
 import vn.edu.iuh.fit.backend.models.entities.JobSkill;
 import vn.edu.iuh.fit.backend.models.entities.JobSkillId;
@@ -90,5 +91,10 @@ public class JobServiceImpl implements JobService {
     @Override
     public List<JobSkill> getJobSkillsByJobId(Long jobId) {
         return jobSkillRepository.getJobSkillsByJobId(jobId);
+    }
+
+    @Override
+    public List<Job> findJobsByCandidateSkills(Long candidateId) {
+        return jobRepository.findJobsByCandidateSkills(candidateId);
     }
 }

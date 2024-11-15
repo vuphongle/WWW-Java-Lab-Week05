@@ -1,6 +1,7 @@
 // JobService.java
 package vn.edu.iuh.fit.backend.services;
 
+import vn.edu.iuh.fit.backend.models.entities.Candidate;
 import vn.edu.iuh.fit.backend.models.entities.Job;
 import vn.edu.iuh.fit.backend.models.entities.JobSkill;
 
@@ -21,4 +22,6 @@ public interface JobService {
     void addJobSkill(JobSkill jobSkill);
 
     List<JobSkill> getJobSkillsByJobId(Long jobId);
+
+    List<Job> findJobsByCandidateSkills(Long candidateId);
 }

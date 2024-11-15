@@ -23,3 +23,4 @@ public interface CandidateService {
 
     List<Candidate> getSuitableCandidatesForJob(Long jobId);
 }
+

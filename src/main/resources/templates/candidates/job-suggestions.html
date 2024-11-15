@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Thông Tin Ứng Viên</title>
+    <title>Gợi Ý Công Việc Phù Hợp</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="mb-4 text-center">Thông Tin Ứng Viên</h1>
+    <h1 class="mb-4 text-center">Gợi Ý Công Việc Phù Hợp cho <span th:text="${candidate.fullName}">Tên Ứng Viên</span></h1>
 
     <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show" role="alert">
         <span th:text="${successMessage}"></span>
@@ -19,28 +19,29 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 
-    <div class="card">
+    <!-- Thông Tin Ứng Viên -->
+    <div class="card mb-4">
         <div class="card-header bg-primary text-white">
             <h5 class="mb-0">Hồ Sơ Ứng Viên</h5>
         </div>
         <div class="card-body">
-            <div class="row mb-3">
+            <div class="row mb-2">
                 <div class="col-md-3 font-weight-bold">Tên Đầy Đủ:</div>
                 <div class="col-md-9" th:text="${candidate.fullName}">Tên Đầy Đủ</div>
             </div>
-            <div class="row mb-3">
+            <div class="row mb-2">
                 <div class="col-md-3 font-weight-bold">Email:</div>
                 <div class="col-md-9" th:text="${candidate.email}">email@example.com</div>
             </div>
-            <div class="row mb-3">
+            <div class="row mb-2">
                 <div class="col-md-3 font-weight-bold">Số Điện Thoại:</div>
                 <div class="col-md-9" th:text="${candidate.phone}">0123456789</div>
             </div>
-            <div class="row mb-3">
+            <div class="row mb-2">
                 <div class="col-md-3 font-weight-bold">Ngày Sinh:</div>
                 <div class="col-md-9" th:text="${candidate.dob}">1990-01-01</div>
             </div>
-            <div class="row mb-3">
+            <div class="row mb-2">
                 <div class="col-md-3 font-weight-bold">Địa Chỉ:</div>
                 <div class="col-md-9" th:text="|${candidate.address.street}, ${candidate.address.city}, ${candidate.address.country}, ${candidate.address.zipcode}|">
                     Địa Chỉ
@@ -71,19 +72,41 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="d-flex justify-content-end">
-                <a th:href="@{'/candidates/' + ${candidate.id} + '/job-suggestions'}" class="btn btn-info me-2">
-                    <i class="bi bi-lightbulb"></i> Gợi Ý Công Việc Phù Hợp
-                </a>
-                <a th:href="@{'/candidates/edit/' + ${candidate.id}}" class="btn btn-warning me-2">
-                    <i class="bi bi-pencil-square"></i> Sửa Hồ Sơ
-                </a>
-                <a th:href="@{/candidates/logout}" class="btn btn-danger">
-                    <i class="bi bi-box-arrow-right"></i> Đăng Xuất
-                </a>
+    <!-- Danh Sách Công Việc Gợi Ý -->
+    <div class="card">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Các Công Việc Gợi Ý</h5>
+        </div>
+        <div class="card-body">
+            <div th:if="${suggestedJobs != null and !#lists.isEmpty(suggestedJobs)}">
+                <div class="row row-cols-1 row-cols-md-2 g-4">
+                    <div class="col" th:each="job : ${suggestedJobs}">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${job.jobName}">Tiêu Đề Công Việc</h5>
+                                <h6 class="card-subtitle mb-2 text-muted" th:text="${job.company.compName}">Tên Công Ty</h6>
+                                <p class="card-text" th:text="${job.jobDesc}">Mô tả công việc...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${suggestedJobs == null or #lists.isEmpty(suggestedJobs)}" class="text-center text-muted">
+                Không có công việc phù hợp được gợi ý.
             </div>
         </div>
+    </div>
+
+    <div class="d-flex justify-content-end mt-4">
+        <a th:href="@{'/candidates/edit/' + ${candidate.id}}" class="btn btn-warning me-2">
+            <i class="bi bi-pencil-square"></i> Sửa Hồ Sơ
+        </a>
+        <a th:href="@{/candidates/logout}" class="btn btn-danger">
+            <i class="bi bi-box-arrow-right"></i> Đăng Xuất
+        </a>
     </div>
 </div>
 

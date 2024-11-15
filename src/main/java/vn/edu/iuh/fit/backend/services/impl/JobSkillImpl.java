@@ -7,6 +7,8 @@ import vn.edu.iuh.fit.backend.models.entities.JobSkillId;
 import vn.edu.iuh.fit.backend.repositories.JobSkillRepository;
 import vn.edu.iuh.fit.backend.services.JobSkillService;
 
+import java.util.List;
+
 @Service
 public class JobSkillImpl implements JobSkillService {
 
@@ -19,5 +21,10 @@ public class JobSkillImpl implements JobSkillService {
         jobSkillId.setSkillId(jobSkill.getSkill().getId());
         jobSkill.setId(jobSkillId);
         jobSkillRepository.save(jobSkill);
+    }
+
+    @Override
+    public List<JobSkill> getJobSkillsByJobId(Long jobId) {
+        return jobSkillRepository.getJobSkillsByJobId(jobId);
     }
 }

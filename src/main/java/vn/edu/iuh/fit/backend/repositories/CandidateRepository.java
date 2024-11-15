@@ -16,7 +16,7 @@ public interface CandidateRepository extends JpaRepository<Candidate, Long>{
     @Query(value = "SELECT DISTINCT c.* FROM candidate c " +
             "JOIN candidate_skill cs ON c.id = cs.can_id " +
             "JOIN job_skill js ON cs.skill_id = js.skill_id " +
-            "WHERE js.job_id = :jobId AND cs.skill_level > js.skill_level",
+            "WHERE js.job_id = :jobId AND cs.skill_level >= js.skill_level",
             nativeQuery = true)
     List<Candidate> findSuitableCandidatesForJob(@Param("jobId") Long jobId);
 }

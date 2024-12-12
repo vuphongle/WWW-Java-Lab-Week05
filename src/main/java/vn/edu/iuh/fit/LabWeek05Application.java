@@ -47,7 +47,7 @@ public class LabWeek05Application {
 				System.out.println("Bảng Skill đã chứa dữ liệu. Bỏ qua bước thêm kỹ năng.");
 			}
 
-			if(candidateRepository.count() > 1000) {
+			if(candidateRepository.count() > 50) {
 				return;
 			}
 			Random rnd = new Random();

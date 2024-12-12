@@ -68,7 +68,7 @@ public class CandidateController {
     @GetMapping("/add")
     public String showAddCandidateForm(Model model) {
         model.addAttribute("candidateForm", new CandidateForm());
-        return "candidates/add-candidate"; // Đảm bảo rằng template này tồn tại
+        return "candidates/add-candidate";
     }
 
     @PostMapping("/add")

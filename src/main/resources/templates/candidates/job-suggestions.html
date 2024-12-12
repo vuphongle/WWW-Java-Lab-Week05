@@ -90,12 +90,17 @@
                                 <h6 class="card-subtitle mb-2 text-muted" th:text="${job.company.compName}">Tên Công Ty</h6>
                                 <p class="card-text" th:text="${job.jobDesc}">Mô tả công việc...</p>
                             </div>
+                            <div class="card-footer text-end">
+                                <a th:href="@{'/jobs/' + ${job.id} + '/apply'}" class="btn btn-primary">
+                                    <i class="bi bi-briefcase-fill"></i> Ứng tuyển
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div th:if="${suggestedJobs == null or #lists.isEmpty(suggestedJobs)}" class="text-center text-muted">
-                Không có công việc phù hợp được gợi ý.
+                Bạn không có công việc nào phù hợp.
             </div>
         </div>
     </div>

@@ -61,15 +61,15 @@
                                 <!-- Mapping type từ số sang chữ bằng th:if -->
                                 <span class="badge ms-2"
                                       th:if="${jobSkill.skillLevel == 0}"
-                                      th:text="'BASIC'"
+                                      th:text="'Thấp'"
                                       th:classappend="' bg-primary'">CƠ BẢN</span>
                                 <span class="badge ms-2"
                                       th:if="${jobSkill.skillLevel == 1}"
-                                      th:text="'INTERMEDIATE'"
+                                      th:text="'Trung bình'"
                                       th:classappend="' bg-warning text-dark'">TRUNG BÌNH</span>
                                 <span class="badge ms-2"
                                       th:if="${jobSkill.skillLevel == 2}"
-                                      th:text="'ADVANCED'"
+                                      th:text="'Cao'"
                                       th:classappend="' bg-success'">NÂNG CAO</span>
                                 <span class="badge ms-2"
                                       th:if="${jobSkill.skillLevel != 0 and jobSkill.skill.type != 1 and jobSkill.skill.type != 2}"

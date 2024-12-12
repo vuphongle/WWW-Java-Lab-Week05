@@ -1,7 +1,7 @@
 - CHUẨN BỊ TRƯỚC KHI CHẠY DỰ ÁN
- + Chạy file sql kèm theo. (để tạo data trước như skill).
- + Mở application.properties để cấu hình lại mariadb userName và passWord cho phù hợp với máy.
- + Mở chú thích ở file LabWeek05Application.java (run) xong đóng chú thích lại (mục đích thêm 1000 mẫu tin vào csdl).
+   + Chạy file sql kèm theo - để tạo các table tương ứng
+   + Mở application.properties để cấu hình lại mariadb userName và passWord cho phù hợp với máy.
+   + Chạy chương trình sẽ tự đông thêm 1000 mẫu tin ứng viên và thêm 20 skill mặc định vào csdl
 - GIỚI THIỆU VỀ DỰ ÁN (truy cập http://localhost:8080):
    - Trang chủ trang web tuyển dụng:
       + Hiển thị các thông job của các công ty đăng tuyển.
@@ -23,4 +23,5 @@
       + Danh sách công việc sẽ có tìm kiếm ứng viên phù hợp cho công việc đó
       + Có thể sửa hồ sơ của công ty
 - LƯU Ý KHI SỬ DỤNG
- + Không sử dụng tiếng việt có dấu (Vì không hổ trợ tiếng Việt)
+   + Không sử dụng tiếng việt có dấu (vì data sql setup không hổ trợ tiếng Việt có dấu)
+- MACHINE LEARNING (CHƯA LÀM ĐƯỢC)

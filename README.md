@@ -1,8 +1,8 @@
-Chuẩn bị trước khi chạy dự án:
+- CHUẨN BỊ TRƯỚC KHI CHẠY DỰ ÁN
  + Chạy file sql kèm theo. (để tạo data trước như skill).
  + Mở application.properties để cấu hình lại mariadb userName và passWord cho phù hợp với máy.
  + Mở chú thích ở file LabWeek05Application.java (run) xong đóng chú thích lại (mục đích thêm 1000 mẫu tin vào csdl).
-Giới thiệu về dự án (truy cập http://localhost:8080):
+- GIỚI THIỆU VỀ DỰ ÁN (truy cập http://localhost:8080):
    - Trang chủ trang web tuyển dụng:
       + Hiển thị các thông job của các công ty đăng tuyển.
       + Ứng tuyển (chưa phát triển ở màn hình này)
@@ -22,6 +22,5 @@ Giới thiệu về dự án (truy cập http://localhost:8080):
       + Đăng tin tuyển dụng - Sau khi đăng tin tuyển dụng sẽ hiển thị ở trang chủ trang web tuyển dụng
       + Danh sách công việc sẽ có tìm kiếm ứng viên phù hợp cho công việc đó
       + Có thể sửa hồ sơ của công ty
-   ......
-Lưu ý khi sử dụng:
+- LƯU Ý KHI SỬ DỤNG
  + Không sử dụng tiếng việt có dấu (Vì không hổ trợ tiếng Việt)
